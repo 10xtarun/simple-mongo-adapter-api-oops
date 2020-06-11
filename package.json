@@ -1,0 +1,21 @@
+{
+  "name": "1_mongodb_adapter_rest_api_oops",
+  "version": "1.0.0",
+  "description": "creating rest api in nodejs along with mongoDB adapter",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "express",
+    "oops",
+    "mongodb",
+    "adapter",
+    "rest",
+    "api"
+  ],
+  "author": "Tarun Singh",
+  "license": "ISC"
+}
