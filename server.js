@@ -14,6 +14,19 @@ class Server{
         //listening to port
         app.listen(port, () => console.log(`Listening on port ${port}`))
     }
+
+    //method for routes
+    setRoutes(){
+        this.expressApp.use('/', routes);
+    }
+
+    //method for error handling
+    errorHandling(){
+        //404 error and forward it to error handler
+        this.expressApp.use(req, res, next) => {
+            cons
+        }
+    }
 }
 
 module.exports = Server;
