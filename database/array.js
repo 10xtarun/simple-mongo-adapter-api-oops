@@ -1,7 +1,13 @@
 
 class ArrayDB {
     constructor(){
-        this.DB = [ ]
+        this.DB = [ 
+            {
+                taskName: "task 1",
+                taskId: 1,
+                completed: false
+            }
+        ]
     }
     //@CREATE save todo to DB array
     saveTodo(taskId, taskName, completed=false){
@@ -13,22 +19,25 @@ class ArrayDB {
     }
     //@READ get all todos
     getTodos(){
-        console.log(this.DB);
         return this.DB;
     }
 
     //@UPDATE get particular todo
     updateTodo(taskId){
-          DB.find((todo, index) => {
+        console.log("taskId, ", taskId)
+          this.DB.find((todo, index) => {
               if(todo.taskId == taskId){
                   //toggle between completed is true or false
-                  if(DB[index].completed == true){
+                  if(DB[index]['completed'] == true){
                     DB[index].completed = false
-                  }else{
+                  }else if(DB[index]['completed'] == false){
+                    console.log(DB[index].completed)
                     DB[index].completed = true
                   }
               }
           })
+        //   var todo = DB.find((todo) => todo.taskId == taskId);
+        //   return todo;
     }
 
     //@DELETE
@@ -42,6 +51,4 @@ class ArrayDB {
 }
 
 var todoArrayDB = new ArrayDB();
-
-todoArrayDB.saveTodo(3, "task3");
-todoArrayDB.getTodos();
+module.exports = todoArrayDB;

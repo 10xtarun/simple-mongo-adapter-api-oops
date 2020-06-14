@@ -13,6 +13,8 @@ class Server{
         const app = this.expressApp = express();
         //use logger
         app.use(logger('dev'));
+        app.use(bodyParser.urlencoded({extended: false}));
+        app.use(bodyParser.json());
 
         // call router and error handling methods
         this.setRoutes();
