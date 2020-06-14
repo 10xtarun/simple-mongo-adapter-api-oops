@@ -1,3 +1,4 @@
+const { deleteTodo } = require("../controllers/main");
 
 class ArrayDB {
     constructor(){
@@ -11,11 +12,19 @@ class ArrayDB {
     }
     //@CREATE save todo to DB array
     saveTodo(taskId, taskName, completed=false){
-        this.DB.push({
-            taskName: taskName,
-            taskId : taskId,
-            completed : completed
-        })
+        var index = this.taskIdExists(taskId);
+        if(index == -1){    //such tasKID does not exits
+            this.DB.push({
+                taskName: taskName,
+                taskId : taskId,
+                completed : completed
+            })
+            return true;
+        } else {
+            //taskID exists already, so reject it 
+            return false;
+        }
+        
     }
     //@READ get all todos
     getTodos(){
@@ -24,29 +33,43 @@ class ArrayDB {
 
     //@UPDATE get particular todo
     updateTodo(taskId){
-        console.log("taskId, ", taskId)
-          this.DB.find((todo, index) => {
-              if(todo.taskId == taskId){
-                  //toggle between completed is true or false
-                  if(DB[index]['completed'] == true){
-                    DB[index].completed = false
-                  }else if(DB[index]['completed'] == false){
-                    console.log(DB[index].completed)
-                    DB[index].completed = true
-                  }
+        var index = this.taskIdExists(taskId);
+        if(index == -1) {   //check if the taskID exists or not
+            return false;
+        } else {
+            //the taskId exists already
+            //toggle between completed is true or false
+            if(this.DB[index].completed == true){
+                this.DB[index].completed = false
+              }else {
+                this.DB[index].completed = true
               }
-          })
-        //   var todo = DB.find((todo) => todo.taskId == taskId);
-        //   return todo;
+        }
+        //return the updated todo
+        return this.DB[index];
     }
 
     //@DELETE
     deleteTodo(taskId){
-        DB.find((todo, index) => {
-            if(todo.taskId == taskId){
-                DB.splice(index, 1);
-            }
-        })
+        var index = this.taskIdExists(taskId); //check for index exists
+        if(index == -1){
+            //if index does not exist;
+            return false;
+        } else {
+            //if index exists, so delete the todo and return it.
+            var deletedTodo = this.DB.splice(index, 1);
+            return deletedTodo[0];
+        }
+    }
+
+    /*Helper Methods*/
+    //check that todo already exist or not in array
+    taskIdExists(taskId) {
+        //creat expression for matching taskId
+        const IdExpression = (todo) => todo.taskId == taskId;
+        //if taskId exists then return it or return -1 
+        var index = this.DB.findIndex(IdExpression);
+        return index;
     }
 }
 

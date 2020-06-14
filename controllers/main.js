@@ -7,28 +7,31 @@ const getTodos = (req, res, next) => {
  
  const addTodo = (req, res , next) => {
     var newTodo = req.body;
-    arrayDB.saveTodo(newTodo.taskId, newTodo.taskName, newTodo.completed);
-    res.json({status: 200, message: "added", data: newTodo});
+    var savedTodo = arrayDB.saveTodo(newTodo.taskId, newTodo.taskName, newTodo.completed);
+    res.json({
+        status: 200, 
+        message: "added", 
+        data: (savedTodo) ? savedTodo : "Failed to save the Todo, check for duplicate taskID."
+    });
  }
 
  const updateTodo = (req, res, next) => {
      const id = req.params.id;
-     const todo = arrayDB.updateTodo(id);
-     console.log(todo);
+     var updatedTodo = arrayDB.updateTodo(id);
      res.json({
          status: 200,
          message: "success",
-         data: todo,
+         data: (updateTodo) ? updateTodo : "Such TaskID does not exist."
      })
  }
 
  const deleteTodo = (req, res, next) => {
     const id = req.params.id;
-    console.log(id);
+    var deletedTodo = arrayDB.deleteTodo(id);
     res.json({
         status: 200,
         message: "success",
-        Data: "Deleted"
+        data: (deletedTodo) ? deletedTodo : "Such TaskID does not exist.",
     })
 }
 
